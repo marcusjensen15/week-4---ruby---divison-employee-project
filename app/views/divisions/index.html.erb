@@ -1,4 +1,5 @@
-<h1></h1>
+<h2>Divisions</h2>
+<p><%= link_to "Create new division", new_division_path %></p>
 
 <% if @divisions.any? %>
 <ul>
@@ -11,8 +12,8 @@
 <% end %>
 
 
-<p><%= link_to "Create new division", new_division_path %></p>
-
+<h2>Employees</h2>
+<p><%= link_to "Create new employee", new_employee_path %></p>
 <% if @employees.any? %>
 <ul>
   <% @employees.each do |employee| %>
@@ -24,8 +25,8 @@
 <% end %>
 
 
-<p><%= link_to "Create new employee", new_employee_path %></p>
-
+<h2>Projects</h2>
+<p><%= link_to "Create new project", new_project_path %></p>
 <% if @projects.any? %>
 <ul>
   <% @projects.each do |project| %>
@@ -35,6 +36,3 @@
 <% else %>
 <p>There are no projects yet.</p>
 <% end %>
-
-
-<p><%= link_to "Create new project", new_project_path %></p>

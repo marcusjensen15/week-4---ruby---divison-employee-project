@@ -1,4 +1,13 @@
 <h1><%= @division.name %></h1>
+<h3>Employees:</h3>
+<% if @division.employees.any? %>
+<% @division.employees.each do |employee| %>
+<p><%=employee.employee_name%></p>
+<% end %>
+<% else %>
+<p>No employees in this division</p>
+<% end %>
+
 
 <% if @division.id != 0 %>
 
@@ -12,6 +21,13 @@
   <% else %>
   <p>You are not allowed to edit this division</p>
 
+
+
+  <% end %>
+
+  <%= form_for "employee", :url => {:action => "add"} do |f| %>
+  <%= f.submit "Add Employee" %>
+  <%= f.select :employee, @employees %>
 
 
   <% end %>

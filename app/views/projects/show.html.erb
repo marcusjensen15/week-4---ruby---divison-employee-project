@@ -1,0 +1,29 @@
+<h1><%= @project.project_name %></h1>
+
+<h3>Employees:</h3>
+<% if @project.employees.any? %>
+<% @project.employees.each do |employee| %>
+<p><%=employee.employee_name%></p>
+<% end %>
+<% else %>
+<p>No employees on this project</p>
+<% end %>
+
+
+<p><%= link_to "Edit", edit_project_path(@project) %></p>
+<p><%= link_to "Delete", project_path(@project),
+  :data => {:confirm => "You sure?",
+  :method => "delete"} %></p>
+
+
+
+
+  <p><%= link_to "Return to projects", projects_path %></p>
+
+
+  <%= form_for "employee", :url => {:action => "add"} do |f| %>
+  <%= f.submit "Add Employee" %>
+    <%= f.select :employee, @employees %>
+
+
+  <% end %>

@@ -1,31 +1,67 @@
 class ProjectsController < ApplicationController
 
-  def index
-    # Code for listing all albums goes here.
-  end
 
   def new
-    # Code for new album form goes here.
+    @project = Project.new
+    :new
   end
 
   def create
-    # Code for creating a new album goes here.
+    @project = Project.new(project_params)
+    if @project.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   def edit
-    # Code for edit album form goes here.
+    @project = Project.find(params[:id])
+    :edit
   end
 
   def show
-    # Code for showing a single album goes here.
+    @project = Project.find(params[:id])
+    @employees = []
+    Employee.all.each do |employee|
+      if @project.employees.exclude?(employee)
+        @employees.push(employee.employee_name)
+      end
+    end
+
+    :show
   end
 
   def update
-    # Code for updating an album goes here.
+    @project = Project.find(params[:id])
+    if @project.update(project_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
   end
 
   def destroy
-    # Code for deleting an album goes here.
+    @project = Project.find(params[:id])
+
+    @project.destroy
+    redirect_to root_path
+  end
+
+  def add
+    @project = Project.find(params[:id])
+    # Division.where(name: employee_params.fetch("division_id")).first.id)
+    employee = Employee.where(employee_name: params[:employee].fetch("employee")).first
+    # binding.pry
+    @project.employees << employee
+    redirect_to project_path
+
   end
 
 end
+
+
+private
+  def project_params
+    params.require(:project).permit(:project_name)
+  end

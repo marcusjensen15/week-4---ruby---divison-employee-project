@@ -7,7 +7,6 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params)
-    # binding.pry
     if @employee.save!
       redirect_to root_path
     else
@@ -18,25 +17,25 @@ class EmployeesController < ApplicationController
   def edit
     @employee = Employee.find(params[:id])
     @division_names = []
-    @division_ids = []
     Division.all.each do |division|
       @division_names.push(division.name)
-      @division_ids.push(division.id)
     end
     :edit
   end
 
   def show
     @employee = Employee.find(params[:id])
+    @projects = []
+    Project.all.each do |project|
+      if @employee.projects.exclude?(project)
+      @projects.push(project.project_name)
+      end
+    end
     :show
   end
 
   def update
     @employee = Employee.find(params[:id])
-    # division = Division.where(name: employee_params.fetch("division_id")).first
-
-
-
     if @employee.update(:employee_name => employee_params.fetch("employee_name"), :division_id => Division.where(name: employee_params.fetch("division_id")).first.id)
       redirect_to root_path
     else
@@ -48,6 +47,16 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     @employee.destroy
     redirect_to root_path
+  end
+
+  def add
+    @employee = Employee.find(params[:id])
+    # Division.where(name: employee_params.fetch("division_id")).first.id)
+    project = Project.where(project_name: params[:project].fetch("project")).first
+    # binding.pry
+    @employee.projects << project
+    redirect_to employee_path
+
   end
 
 end

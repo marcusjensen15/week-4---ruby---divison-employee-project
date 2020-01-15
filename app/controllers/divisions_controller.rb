@@ -28,6 +28,14 @@ class DivisionsController < ApplicationController
 
   def show
     @division = Division.find(params[:id])
+    @employees = []
+    Employee.all.each do |employee|
+    if employee.division_id != @division.id
+      @employees.push(employee.employee_name)
+      end
+    end
+
+
     :show
   end
 
@@ -42,9 +50,23 @@ class DivisionsController < ApplicationController
 
   def destroy
     @division = Division.find(params[:id])
-    
+
     @division.destroy
     redirect_to root_path
+  end
+
+  def add
+    @division = Division.find(params[:id])
+
+
+    employee = Employee.where(employee_name: params[:employee].fetch("employee")).first
+
+    employee.update(:division_id => @division.id)
+
+
+    redirect_to division_path
+
+
   end
 
 end
