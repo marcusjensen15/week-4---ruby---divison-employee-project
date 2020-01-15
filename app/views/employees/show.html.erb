@@ -4,10 +4,20 @@
 <h3>Projects:</h3>
 <% if @employee.projects.any? %>
 <% @employee.projects.each do |project| %>
-<p><%=project.project_name%></p>
+<p><%=project.project_name%>
+  <%= form_for "project_remove", :url => {:action => "remove"} do |f| %>
+  <%= f.hidden_field :project_id, :value => project.id%>
+
+
+  <%= f.submit "Take this employee off of the project"%>
+<% end %>
+
+
+
+</p>
 <% end %>
 <% else %>
-<p>No employees on this employee</p>
+<p>This employee has no projects</p>
 <% end %>
 <p><%= link_to "Edit", edit_employee_path(@employee) %></p>
 <p><%= link_to "Delete", employee_path(@employee),

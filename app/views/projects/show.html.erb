@@ -3,7 +3,16 @@
 <h3>Employees:</h3>
 <% if @project.employees.any? %>
 <% @project.employees.each do |employee| %>
-<p><%=employee.employee_name%></p>
+<p><%=employee.employee_name%>
+
+    <%= form_for "employee_remove", :url => {:action => "remove"} do |f| %>
+    <%= f.hidden_field :employee_id, :value => employee.id%>
+
+
+    <%= f.submit "Take this employee of the project"%>
+  <% end %>
+
+</p>
 <% end %>
 <% else %>
 <p>No employees on this project</p>

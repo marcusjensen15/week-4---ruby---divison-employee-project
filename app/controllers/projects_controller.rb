@@ -58,6 +58,18 @@ class ProjectsController < ApplicationController
 
   end
 
+  def remove
+
+    @project = Project.find(params[:id])
+    # Division.where(name: employee_params.fetch("division_id")).first.id)
+    employee = Employee.find(params[:employee_remove].fetch("employee_id"))
+    # binding.pry
+    @project.employees.delete(employee)
+    redirect_to project_path
+
+
+  end
+
 end
 
 

@@ -8,11 +8,13 @@ Rails.application.routes.draw do
   resources :employees do
     member do
       post :add
+      post :remove
     end
   end
   resources :projects do
     member do
       post :add
+      post :remove
 
     end
 
