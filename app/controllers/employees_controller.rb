@@ -17,6 +17,12 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    @division_names = []
+    @division_ids = []
+    Division.all.each do |division|
+      @division_names.push(division.name)
+      @division_ids.push(division.id)
+    end
     :edit
   end
 
@@ -27,7 +33,11 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-    if @employee.update(employee_params)
+    # division = Division.where(name: employee_params.fetch("division_id")).first
+
+
+
+    if @employee.update(:employee_name => employee_params.fetch("employee_name"), :division_id => Division.where(name: employee_params.fetch("division_id")).first.id)
       redirect_to root_path
     else
       render :edit

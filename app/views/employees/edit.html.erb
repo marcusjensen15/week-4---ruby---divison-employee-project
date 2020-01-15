@@ -2,6 +2,8 @@
 
 <%= form_for @employee do |f| %>
   <%= f.label :employee_name %>
-  <%= f.text_field :employee_name %>
+  <%= f.text_field :employee_name, :required => true %>
+  <%= f.label :division_id %>
+  <%= f.select :division_id, @division_names%>
   <%= f.submit  %>
 <% end %>

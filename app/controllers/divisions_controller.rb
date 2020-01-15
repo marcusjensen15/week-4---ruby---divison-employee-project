@@ -42,6 +42,7 @@ class DivisionsController < ApplicationController
 
   def destroy
     @division = Division.find(params[:id])
+    
     @division.destroy
     redirect_to root_path
   end
