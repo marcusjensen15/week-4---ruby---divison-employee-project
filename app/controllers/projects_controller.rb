@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
+      flash[:notice] = "Project Added"
       redirect_to root_path
     else
       render :new
@@ -35,6 +36,7 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     if @project.update(project_params)
+      flash[:notice] = "Project Updated"
       redirect_to root_path
     else
       render :edit
@@ -45,6 +47,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     @project.destroy
+    flash[:notice] = "Projet Removed"
     redirect_to root_path
   end
 
@@ -54,6 +57,7 @@ class ProjectsController < ApplicationController
     employee = Employee.where(employee_name: params[:employee].fetch("employee")).first
     # binding.pry
     @project.employees << employee
+    flash[:notice] = "Employee Added"
     redirect_to project_path
 
   end
@@ -65,6 +69,7 @@ class ProjectsController < ApplicationController
     employee = Employee.find(params[:employee_remove].fetch("employee_id"))
     # binding.pry
     @project.employees.delete(employee)
+    flash[:notice] = "Employee Removed"
     redirect_to project_path
 
 

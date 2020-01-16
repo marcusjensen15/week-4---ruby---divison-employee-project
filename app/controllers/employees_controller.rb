@@ -8,6 +8,7 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     if @employee.save!
+      flash[:notice] = "Employee Created"
       redirect_to root_path
     else
       render :new
@@ -37,6 +38,7 @@ class EmployeesController < ApplicationController
   def update
     @employee = Employee.find(params[:id])
     if @employee.update(:employee_name => employee_params.fetch("employee_name"), :division_id => Division.where(name: employee_params.fetch("division_id")).first.id)
+      flash[:notice] = "Employee Updated"
       redirect_to root_path
     else
       render :edit
@@ -46,6 +48,7 @@ class EmployeesController < ApplicationController
   def destroy
     @employee = Employee.find(params[:id])
     @employee.destroy
+    flash[:notice] = "Employee Removed"
     redirect_to root_path
   end
 
@@ -55,6 +58,7 @@ class EmployeesController < ApplicationController
     project = Project.where(project_name: params[:project].fetch("project")).first
     # binding.pry
     @employee.projects << project
+    flash[:notice] = "Project Added"
     redirect_to employee_path
 
   end
@@ -66,6 +70,7 @@ class EmployeesController < ApplicationController
     project = Project.find(params[:project_remove].fetch("project_id"))
     # binding.pry
     @employee.projects.delete(project)
+    flash[:notice] = "Project Removed"
     redirect_to employee_path
 
   end
