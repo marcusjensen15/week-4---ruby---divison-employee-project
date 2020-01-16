@@ -1,9 +1,9 @@
 class DivisionsController < ApplicationController
 
   def index
-  
+
     @divisions = Division.all
-    @employees = Employee.all
+    @employees = Employee.all - Employee.no_division
     @projects = Project.all
     :index
   end

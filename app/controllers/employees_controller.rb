@@ -7,7 +7,8 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params)
-    if @employee.save!
+
+    if @employee.save
       flash[:notice] = "Employee Created"
       redirect_to root_path
     else
